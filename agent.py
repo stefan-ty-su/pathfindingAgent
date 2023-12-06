@@ -1,5 +1,6 @@
 from maze import Maze
 from node import Node
+import heapq
 
 class Agent:
 
@@ -16,6 +17,7 @@ class Agent:
         self.targetNode = target
 
         self.openNodes = [self.startNode]
+        heapq.heapify(self.openNodes)
         self.closedNodes = []
     
     def getLowestCostNode(self) -> Node:
@@ -30,15 +32,9 @@ class Agent:
         '''
 
         if self.openNodes == None or len(self.openNodes) == 0:
-            raise ValueError("Node Array is empty")
+            raise ValueError(f'Node Array is {self.openNodes}')
 
-        minNode = self.openNodes[0]
-        removedIndex = 0
-        for index in range(1,len(self.openNodes)):
-            if self.openNodes[index].fCost < minNode.fCost:
-                minNode = self.openNodes[index]
-                removedIndex = index
-        self.openNodes.pop(removedIndex)
+        minNode = heapq.heappop(self.openNodes)
         return minNode
 
     # Astar Algo
@@ -49,7 +45,7 @@ class Agent:
         if (node.value != 3) and (node.value != 4):
             newPath = node.updateCosts(parentNode, self.targetNode)
             if newPath:
-                self.openNodes.append(node)
+                heapq.heappush(self.openNodes, node)
                 node.value = 2
 
     def updateNeighbours(self, node: Node) -> None:

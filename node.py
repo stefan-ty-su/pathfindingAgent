@@ -90,3 +90,8 @@ class Node:
 
     def isLinked(self, node) -> True:
         return node in self.links
+    
+    def __lt__(self, other) -> bool:
+        return self.fCost < other.fCost
+
+
