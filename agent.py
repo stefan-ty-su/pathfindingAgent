@@ -4,17 +4,17 @@ import heapq
 
 class Agent:
 
-    def __init__(self, layout: Maze, start: Node, target: Node) -> None:
+    def __init__(self, maze: Maze) -> None:
         """
         
         """
-        self.layout = layout
-        self.grid = layout.grid
-        self.gridSize = layout.gridSize
+        self.maze = maze
+        self.grid = maze.grid
+        self.gridSize = maze.gridSize
 
-        self.startNode = start
+        self.startNode = maze.startNode
         self.startNode.gCost = 0
-        self.targetNode = target
+        self.targetNode = maze.targetNode
 
         self.openNodes = [self.startNode]
         heapq.heapify(self.openNodes)

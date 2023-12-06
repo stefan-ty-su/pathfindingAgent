@@ -3,7 +3,7 @@ import random
 
 class Maze:
 
-    def __init__(self, gridSize: int) -> None:
+    def __init__(self, gridSize: int, start: tuple, target: tuple) -> None:
         # Creating Grid
         self.grid = []
         self.gridSize = gridSize
@@ -13,15 +13,12 @@ class Maze:
                 self.grid[row].append(Node(column, row))
 
         # Algo Setup
-        self.startNode = self.grid[1][1]
-        # self.startNode.value = 1 # Start Square
-        # self.startNode.gCost = 0
+        self.startNode = self.grid[start[0]][start[1]]
+        self.startNode.value = 1 # Start Square
+        self.startNode.gCost = 0
 
-        # self.targetNode = self.grid[self.gridSize-2][self.gridSize-2]
-        # self.targetNode.value = 1
-
-        # self.openNodes = [self.startNode]
-        # self.closedNodes = []
+        self.targetNode = self.grid[target[0]][target[1]]
+        self.targetNode.value = 1
 
         self.generateMaze()
 
@@ -36,7 +33,6 @@ class Maze:
         nodeStack = [self.startNode]
         nodeMax = self.gridSize**2
         visitedArr = [self.startNode]
-        print("This Ran")
         self.generateMazeAux(self.grid, nodeStack, visitedArr, False)
 
     def generateMazeAux(self, grid: list, nodeStack: list, visitedArr: list, backTracking: bool) -> None:
